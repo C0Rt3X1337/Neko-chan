@@ -126,6 +126,7 @@ public class FishGame
 		
 		switch (type)
 		{
+			
 			//output value and rank of a given player
 			case Globals.VALUE:
 			{
