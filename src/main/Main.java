@@ -32,6 +32,7 @@ public class Main
 		bot.setVerbose(true);
 		bot.setName("Neko-chan");
 		bot.setLogin("Neko-chan");
+		bot.setVersion("Neko-chan v1.0 made by " + Globals.BOTMASTER + " GIT: https://github.com/C0Rt3X1337/Neko-chan");
 		bot.setMessageDelay(500);
 		
 		DB.init(args[0]);
