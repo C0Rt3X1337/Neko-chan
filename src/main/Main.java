@@ -44,7 +44,7 @@ public class Main
 		bot.getListenerManager().addListener(new PMAdminListener());
 		bot.getListenerManager().addListener(new TriggerListener());
 		
-        bot.connect("znc.ii10.de", 1337, args[2]);
+        bot.connect("127.0.0.1", 1337, args[2]);
         
         ResultSet result = DB.get("SELECT * FROM Channels");
         while (result.next()) bot.joinChannel(result.getString("Channel"));
