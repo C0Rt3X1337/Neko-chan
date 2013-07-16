@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.pircbotx.hooks.Event;
+import org.pircbotx.hooks.WaitForQueue;
 import org.pircbotx.hooks.events.NoticeEvent;
 
 public class Globals
@@ -11,6 +12,8 @@ public class Globals
 	public static final String BOTMASTER = "C0Rt3X";
 	
 	public static String nickservPW = "";
+	
+	public final int basePrice = 500; //for the shop (everything related to that is still beta)
 	
 	public static final long HOUR = 3600000;
 	
@@ -53,15 +56,17 @@ public class Globals
 		{ 
 			try
 			{
-				NoticeEvent noticeEvent = event.getBot().waitFor(NoticeEvent.class);
+				WaitForQueue queue = new WaitForQueue(event.getBot());
+				NoticeEvent noticeEvent = queue.waitFor(NoticeEvent.class);
 				if (noticeEvent.getUser().getNick().equalsIgnoreCase("NickServ") && noticeEvent.getMessage().contains("STATUS " + nick)) 
 				{
 					statusParts = noticeEvent.getMessage().split(" ");
 					isDone = true;
+					queue.close();
 					if (statusParts[2].equals("2") || statusParts[2].equals("3")) isIdentified = true;
 				}
 			} catch (InterruptedException e) { }
-		}	
+		}
 		return isIdentified;
 	}
 }

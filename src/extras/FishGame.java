@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
+import org.pircbotx.Channel;
 import org.pircbotx.Colors;
 import org.pircbotx.hooks.events.MessageEvent;
 
@@ -291,4 +292,81 @@ public class FishGame
 
 		return players;
 	}
+	
+	//stuff for the shop below
+	
+	//returns the price modifier for the individual user
+	private double getPersonalModifier(String nick)
+	{
+		int rank = 0, total = 0, temp = 0, totalFish = 0, userFish = 0, freeLolis = 0, totalPlayers = 0;
+		double personalModifier = 0;
+		
+		try
+		{	
+			ResultSet result = DB.get("SELECT User, number FROM Fish ORDER BY number DESC;");
+			
+			while (result.next())
+			{
+				if(!(temp == result.getInt("number"))) 
+				{	
+					total++;
+					temp = result.getInt("number"); 
+				}
+				if (nick.equals(result.getString("User"))) rank = total;
+			}
+			if (rank != 0)
+			{	
+				result = DB.get("SELECT number FROM Fish WHERE User='" + nick + "';");
+				result.last();
+				userFish = result.getInt("number");
+			} else return - 1.0; //nick is no player
+			result = DB.get("SELECT count(*) FROM SpecialLolis WHERE Owner = 'BANK';");
+			result.last();
+			freeLolis = result.getInt(1);
+			
+			result = DB.get("SELECT count(*) FROM Fish;");
+			result.last();
+			totalPlayers = result.getInt(1);
+			
+		} catch (SQLException e) { }
+		
+		personalModifier = 0.5 * (totalPlayers / freeLolis) * 0.8 * (1 + (userFish / totalFish)) * 0.6 * (1 - ((rank - 1) / total));
+		return personalModifier;
+	}
+	
+	//see numeric identifiers of the currently available characters
+	public void bank(MessageEvent event)
+	{
+		String output = "Currently buyable characters (numbers only): ";
+		try
+		{
+			ResultSet result = DB.get("SELECT * FROM SpecialLolis WHERE Owner = 'BANK';");
+			while (result.next())
+			{
+				output += result.getInt("id") + " ";
+			}
+		} catch (SQLException e) { }
+		event.getBot().sendNotice(event.getUser(), output);
+	}
+	
+	public void search(String name)
+	{
+		
+	}
+	
+	public void info(String number)
+	{
+		
+	}
+	
+	public void buy(String number)
+	{
+		
+	}
+	
+	public void sell(String number)
+	{
+		
+	}
 }
+

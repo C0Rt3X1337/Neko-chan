@@ -3,6 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/MySQL"/>
-	<classpathentry kind="lib" path="D:/eclipse/Neko-pircbotX/pircbotx-1.8-20121206.041159-35.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/PIRCBotX"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

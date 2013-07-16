@@ -44,16 +44,10 @@ public class Main
 		bot.getListenerManager().addListener(new PMAdminListener());
 		bot.getListenerManager().addListener(new TriggerListener());
 		
-        bot.connect("irc.rizon.net");
+        bot.connect("znc.ii10.de", 1337, args[2]);
         
-        if ((args.length == 1) && args[0].equals("-debug"))
-        {
-        	bot.joinChannel("#Neko-chan");
-        } else
-        {
-        	ResultSet result = DB.get("SELECT * FROM Channels");
-        	while (result.next()) bot.joinChannel(result.getString("Channel"));
-        }
+        ResultSet result = DB.get("SELECT * FROM Channels");
+        while (result.next()) bot.joinChannel(result.getString("Channel"));
 	}
 
 }
